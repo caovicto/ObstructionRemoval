@@ -296,9 +296,13 @@ class Decomposition_Net_Translation(object):
 
             tf_XYZ = tf_XYZ[tf.newaxis, :, :, :, tf.newaxis]  # [1, H, W, 3, 1]
             tf_XYZ = tf.tile(tf_XYZ, [tf_homography_matrix.get_shape().as_list()[0], 1, 1, 1, 1])  # [B, H, W, 3, 1]
-            tf_homography_matrix = tf.tile(tf_homography_matrix[:, tf.newaxis, tf.newaxis], (1, im_shape_h, im_shape_w, 1, 1))  # [B, H, W, 3, 3]
-            tf_unnormalized_transformed_XYZ = tf.matmul(tf_homography_matrix, tf_XYZ, transpose_b=False)  # [B, H, W, 3, 1]
-            tf_transformed_XYZ = tf_unnormalized_transformed_XYZ / tf_unnormalized_transformed_XYZ[:, :, :, -1][:, :, :, tf.newaxis, :]
+            tf_homography_matrix = tf.tile(tf_homography_matrix[:, tf.newaxis, tf.newaxis], 
+                                           (1, im_shape_h, im_shape_w, 1, 1))  # [B, H, W, 3, 3]
+            tf_unnormalized_transformed_XYZ = tf.matmul(tf_homography_matrix, 
+                                                        tf_XYZ, transpose_b=False)  # [B, H, W, 3, 1]
+            tf_transformed_XYZ = 
+                tf_unnormalized_transformed_XYZ / tf_unnormalized_transformed_XYZ[:, :, :, -1][:, :, :, tf.newaxis, :]
+                
             flow = -(tf_transformed_XYZ - tf_XYZ)[..., :2, 0]
 
             if not self.is_training:
