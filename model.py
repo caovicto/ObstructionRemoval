@@ -105,7 +105,8 @@ class ImageReconstruction_chain_obstruction_1029(object):
                 img_diff_1 = registrated_background_21 - image_2_B
                 img_diff_3 = registrated_background_23 - image_2_B
                 img_diff_4 = registrated_background_24 - image_2_B
-                output_B = image_2_B + (weights[..., 0:1] * img_diff_0 + weights[..., 1:2] * img_diff_1 + weights[..., 2:3] * img_diff_3 + weights[..., 3:4] * img_diff_4)
+                output_B = image_2_B + (weights[..., 0:1] * img_diff_0 + weights[..., 1:2] * img_diff_1 + 
+                                        weights[..., 2:3] * img_diff_3 + weights[..., 3:4] * img_diff_4)
                 return output_B, alpha + x[..., 4:5]
             else:
                 x = tf.layers.Conv2D(4, (3, 3), (1, 1), 'same')(x)
