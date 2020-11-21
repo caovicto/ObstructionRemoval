@@ -1,16 +1,11 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
 import tensorflow as tf
-
 from warp_utils import dense_image_warp
-
 FLAGS = tf.app.flags.FLAGS
 epsilon = 0.001
-
 from functools import partial
-
 
 def create_outgoing_mask(flow):
     """Computes a mask that is zero at all positions where the flow
