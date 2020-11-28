@@ -474,7 +474,8 @@ with tf.Graph().as_default():
 
 
     def warp_with_large_size(I, F, c):
-        return tf.reshape(dense_image_warp(I, tf.stack([-F[..., 1], -F[..., 0]], -1)), [FLAGS.batch_size, RESIZED_H, RESIZED_W, c])
+        return tf.reshape(dense_image_warp(I, tf.stack([-F[..., 1], -F[..., 0]], -1)), 
+                          [FLAGS.batch_size, RESIZED_H, RESIZED_W, c])
 
     """pull size PWC"""
     def generate_gaussian_kernel(sz):
