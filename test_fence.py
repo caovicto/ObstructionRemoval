@@ -77,7 +77,10 @@ def flow_to_img(flow):
     flow_angle = tf.atan2(flow[..., 0], flow[..., 1])
 
     hsv_0 = ((flow_angle / np.pi)+1.0)/2.0
-    hsv_1 = (flow_magnitude - tf.reduce_min(flow_magnitude, axis=[1, 2], keepdims=True)) / (1e-6 + tf.reduce_max(flow_magnitude, axis=[1, 2], keepdims=True) - tf.reduce_min(flow_magnitude, axis=[1, 2], keepdims=True))
+    hsv_1 = (flow_magnitude - tf.reduce_min(flow_magnitude, axis=[1, 2], keepdims=True)) 
+              / (1e-6 + tf.reduce_max(flow_magnitude, axis=[1, 2], keepdims=True) 
+              - tf.reduce_min(flow_magnitude, axis=[1, 2], keepdims=True))
+      
     hsv_2 = tf.ones(tf.shape(hsv_0))
     hsv = tf.stack([hsv_0, hsv_1, hsv_2], -1)
     rgb = tf.image.hsv_to_rgb(hsv)
@@ -85,7 +88,8 @@ def flow_to_img(flow):
     return rgb
 
 def warp(I, F):
-    return tf.reshape(dense_image_warp(I, tf.stack([-F[..., 1], -F[..., 0]], -1)), [FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, 3])
+    return tf.reshape(dense_image_warp(I, tf.stack([-F[..., 1], -F[..., 0]], -1)), 
+                      [FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, 3])
 
 
 
@@ -509,7 +513,8 @@ with tf.Graph().as_default():
     PWC_input = tf.concat(tmp_list, 0)  # [batch_size*20, 2, H, W, 3]
     PWC_input = tf.reshape(PWC_input, [FLAGS.batch_size * 4, 2, pwc_h, pwc_w, 3])
     pred_labels, _ = nn.nn(PWC_input, reuse=tf.AUTO_REUSE)
-    pred_labels = tf.image.resize_bilinear(pred_labels, (RESIZED_H // (2 ** down_level), RESIZED_W // (2 ** down_level)), align_corners=True)
+    pred_labels = tf.image.resize_bilinear(pred_labels, (RESIZED_H // (2 ** down_level), RESIZED_W // (2 ** down_level)), 
+                                           align_corners=True)
     """
     0: W
     1: H
