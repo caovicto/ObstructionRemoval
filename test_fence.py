@@ -170,7 +170,13 @@ with tf.Graph().as_default():
         0: W
         1: H
         """
-        ratio_tensor = tf.expand_dims(tf.expand_dims(tf.expand_dims(tf.convert_to_tensor(np.asarray([ratio_w, ratio_h]), dtype=tf.float32), 0), 0), 0)
+        ratio_tensor = tf.expand_dims(
+                         tf.expand_dims(
+                           tf.expand_dims(
+                             tf.convert_to_tensor(np.asarray([ratio_w, ratio_h]), dtype=tf.float32), 
+                           0), 
+                          0), 
+                         0)
 
         FF01 = pred_labels[FLAGS.batch_size * 0:FLAGS.batch_size * 1] * ratio_tensor
         FF02 = pred_labels[FLAGS.batch_size * 1:FLAGS.batch_size * 2] * ratio_tensor
@@ -238,7 +244,9 @@ with tf.Graph().as_default():
     FB40, FB41, FB42, FB43 = model.inference(fused_frame0, fused_frame1, fused_frame2, fused_frame3, fused_frame4)
     
     """image"""
-    model4 = ImageReconstruction_chain_obstruction_1029(FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, level=4, weighted_fusion=False)
+    model4 = ImageReconstruction_chain_obstruction_1029(
+      FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, level=4, weighted_fusion=False)
+    
     B0_pred_4, B1_pred_4, B2_pred_4, B3_pred_4, B4_pred_4, \
     A0_pred_4, A1_pred_4, A2_pred_4, A3_pred_4, A4_pred_4 = model4._build_model(tf.concat([fused_frame0,
                                                                                            fused_frame1,
@@ -280,7 +288,9 @@ with tf.Graph().as_default():
                                       int(np.ceil(float(CROP_PATCH_W // (2 ** 3)) / 64.0)) * 64)
 
     """3"""
-    model3 = ImageReconstruction_chain_obstruction_1029(FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, level=3, weighted_fusion=False)
+    model3 = ImageReconstruction_chain_obstruction_1029(
+      FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, level=3, weighted_fusion=False)
+    
     B0_pred_3, B1_pred_3, B2_pred_3, B3_pred_3, B4_pred_3, \
     A0_pred_3, A1_pred_3, A2_pred_3, A3_pred_3, A4_pred_3 = model3._build_model(tf.concat([fused_frame0,
                                                                                            fused_frame1,
@@ -323,7 +333,9 @@ with tf.Graph().as_default():
                                       int(np.ceil(float(CROP_PATCH_H // (2 ** 2)) / 64.0)) * 64,
                                       int(np.ceil(float(CROP_PATCH_W // (2 ** 2)) / 64.0)) * 64)
     """2"""
-    model2 = ImageReconstruction_chain_obstruction_1029(FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, level=2, weighted_fusion=False)
+    model2 = ImageReconstruction_chain_obstruction_1029(
+      FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, level=2, weighted_fusion=False)
+    
     B0_pred_2, B1_pred_2, B2_pred_2, B3_pred_2, B4_pred_2, \
     A0_pred_2, A1_pred_2, A2_pred_2, A3_pred_2, A4_pred_2 = model2._build_model(tf.concat([fused_frame0,
                                                                                            fused_frame1,
@@ -367,7 +379,9 @@ with tf.Graph().as_default():
                                       int(np.ceil(float(CROP_PATCH_W // (2 ** 1)) / 64.0)) * 64)
 
     """1"""
-    model1 = ImageReconstruction_chain_obstruction_1029(FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, level=1, weighted_fusion=False)
+    model1 = ImageReconstruction_chain_obstruction_1029(
+      FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, level=1, weighted_fusion=False)
+    
     B0_pred_1, B1_pred_1, B2_pred_1, B3_pred_1, B4_pred_1, \
     A0_pred_1, A1_pred_1, A2_pred_1, A3_pred_1, A4_pred_1 = model1._build_model(tf.concat([fused_frame0,
                                                                                            fused_frame1,
@@ -411,7 +425,9 @@ with tf.Graph().as_default():
                                       int(np.ceil(float(CROP_PATCH_W // (2 ** 0)) / 64.0)) * 64)
 
     """0"""
-    model0 = ImageReconstruction_chain_obstruction_1029(FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, level=0, weighted_fusion=False)
+    model0 = ImageReconstruction_chain_obstruction_1029(
+      FLAGS.batch_size, CROP_PATCH_H, CROP_PATCH_W, level=0, weighted_fusion=False)
+    
     B0_pred_0, B1_pred_0, B2_pred_0, B3_pred_0, B4_pred_0, \
     A0_pred_0, A1_pred_0, A2_pred_0, A3_pred_0, A4_pred_0 = model0._build_model(tf.concat([fused_frame0,
                                                                                            fused_frame1,
@@ -498,7 +514,14 @@ with tf.Graph().as_default():
     0: W
     1: H
     """
-    ratio_tensor = tf.expand_dims(tf.expand_dims(tf.expand_dims(tf.convert_to_tensor(np.asarray([ratio_w, ratio_h]), dtype=tf.float32), 0), 0), 0)
+    ratio_tensor = tf.expand_dims(
+                    tf.expand_dims(
+                       tf.expand_dims(
+                         tf.convert_to_tensor(np.asarray([ratio_w, ratio_h]), dtype=tf.float32), 
+                        0), 
+                     0), 
+                    0)
+    
     FB20 = pred_labels[FLAGS.batch_size * 0:FLAGS.batch_size * 1] * ratio_tensor * (2 ** down_level)
     FB21 = pred_labels[FLAGS.batch_size * 1:FLAGS.batch_size * 2] * ratio_tensor * (2 ** down_level)
     FB23 = pred_labels[FLAGS.batch_size * 2:FLAGS.batch_size * 3] * ratio_tensor * (2 ** down_level)
